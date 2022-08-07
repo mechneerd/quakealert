@@ -2,26 +2,16 @@ from selenium import webdriver
 from sendsms import NotificationManager
 import datetime
 
-
-
 sms = NotificationManager()
 chrome_path = "/home/prasanth/chromedriver/chromedriver_linux64/chromedriver"
 driver = webdriver.Chrome(executable_path=chrome_path)
 driver.get("https://earthquake.usgs.gov/earthquakes/map/?extent=21.00247,-128.67188&extent=52.45601,-61.30371")
 
-#globe = driver.find_element_by_xpath('/html/body/usgs-root/div/usgs-map/section/div/div[5]/div[1]/div[2]/div/div')
-#globe.click()
-#time.sleep(20)
-#world = driver.find_element_by_xpath('/html/body/usgs-root/div/usgs-map/section/div/div[5]/div[1]/div[2]/div[2]/usgs-map-zoom-to/mat-list/mat-list-item[7]/div')
-#world.click()
-
 search_city = driver.find_elements_by_css_selector(".details h6")
 result_list = [item.text for item in search_city]
-#print(result_list)
 
 magnitude_result = driver.find_elements_by_class_name("callout")
 magnitude_list = [item.text for item in magnitude_result]
-#print(magnitude_list)
 
 time_of_quake = driver.find_elements_by_css_selector(".details .subheader .time")
 time_list = [item.text for item in time_of_quake]
@@ -42,16 +32,3 @@ for item in range(0, len(magnitude_list)):
             if country[1:] == "Japan":
                 print(country)
                 sms.send_sms(f"please be careful. there is a earthquake in {country}.With intensity greater than magnitude of 5")
-
-
-
-
-
-#search_city.send_keys("Chennai")
-#time.sleep(120)
-#city_result = driver.find_element_by_class_name("ui result")
-#print(city_result.text)
-#city_result_list = [item.text for item in city_result]
-#print(city_result_list)
-
-
